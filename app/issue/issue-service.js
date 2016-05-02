@@ -1,6 +1,7 @@
 angular.module('issueTracker.issues')
     .factory('issueService', ['requester', 'identity',
         function name(requester, identity) {
+            var url = "issues/";
             return {
                 getIssuesByUser: getIssuesByUser,
                 getIssuesByProject: getIssuesByProject,
@@ -17,28 +18,28 @@ angular.module('issueTracker.issues')
                     'issues/me?orderBy=DueDate desc, IssueKey&pageSize=20&pageNumber=1');
             }
 
-            function getIssueById(params) {
-
+            function getIssueById(issueId) {
+                return requester.get(url + issueId);
             }
 
-            function changeIssueStatus(params) {
-
+            function changeIssueStatus(issueId, statusId) {
+                return requester.put(url + issueId + '?changeStatus=' + statusId);
             }
 
             function editIssue(params) {
-
+                return requester.put(url, issue);
             }
 
-            function addIssue(params) {
-
+            function addIssue(issue) {
+                return requester.post(url, issue);
             }
 
-            function getCommentsByIssue(params) {
-
+            function getCommentsByIssue(issueId) {
+                return requester.get(url + issueId + '/comments');
             }
 
-            function addComment(params) {
-
+            function addComment(comment) {
+                return requester.post(url + issueId + '/comments', comment);
             }
         }
     ]);
