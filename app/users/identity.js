@@ -1,6 +1,6 @@
 angular.module('issueTracker.users.identity', [])
-    .factory('identity', ['localStorageServiceProvider',
-        function (localStorageServiceProvider) {
+    .factory('identity', ['localStorageService',
+        function (localStorageService) {
             var key = "user";
 
             return {
@@ -9,12 +9,12 @@ angular.module('issueTracker.users.identity', [])
             }
 
             function saveUserData(user) {
-                localStorageServiceProvider.set(key, data);
+                localStorageService.set(key, user);
 
             }
 
-            function getUserData(user) {
-                localStorageServiceProvider.get(key);
+            function getUserData() {
+                return localStorageService.get(key);
             }
         }
     ]);
