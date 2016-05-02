@@ -1,0 +1,28 @@
+<table class="table table-bordered"> 
+    <tr ng-repeat="issue in issues" ng-class-even="'even-class'" ng-class-odd="'odd-class'">
+        <td class="text-center">
+            {{issue.Title}}
+        </td>
+        <td class="text-center">
+            {{issue.DueDate}}
+        </td>
+        <td class="text-center">
+            {{issue.Description}}
+        </td>
+        <td class="text-center">
+            {{issue.Assignee.Username}}
+        </td>
+        <td class="text-center">
+            {{issue.Author.Username}}
+        </td>
+        <td class="text-center">
+            {{issue.Priority.Name}}
+        </td>
+        <td class="text-center">
+            {{issue.Status.Name}}
+        </td>
+        
+        
+        
+    </tr>
+</table>

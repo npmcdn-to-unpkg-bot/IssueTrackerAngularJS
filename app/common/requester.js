@@ -6,7 +6,8 @@
         return {
             get: get,
             post: post,
-            put: put
+            put: put,
+            setAuthorization: setAuthorization
         };
 
         function get(url, queryParams) {
@@ -28,7 +29,7 @@
 
             $http.post(BASE_URL + '/' + url, postData,
                 {
-                   headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
                 })
                 .then(function (response) {
                     defered.resolve(response.data);
@@ -43,6 +44,11 @@
         function put() {
             throw new Error('Not implemented!');
         }
+
+        function setAuthorization(accessToken) {
+            $http.defaults.headers.common.Authorization = 'Bearer ' + accessToken;
+        }
+
     }
 
     angular.module('issueTracker.common', [])

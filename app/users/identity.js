@@ -8,8 +8,8 @@ angular.module('issueTracker.users.identity', [])
                 saveUserData: saveUserData
             }
 
-            function saveUserData(user) {
-                localStorageService.set(key, user);
+            function saveUserData(userToken) {
+                localStorageService.set(key, userToken);
 
             }
 
