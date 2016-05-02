@@ -27,10 +27,7 @@
         function post(url, postData) {
             var defered = $q.defer();
 
-            $http.post(BASE_URL + '/' + url, postData,
-                {
-                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
-                })
+            $http.post(BASE_URL + '/' + url, postData)
                 .then(function (response) {
                     defered.resolve(response.data);
                 }, function (error) {
@@ -47,8 +44,9 @@
 
         function setAuthorization(accessToken) {
             $http.defaults.headers.common.Authorization = 'Bearer ' + accessToken;
+           // $http.defaults.headers.post =
+          //      { 'Content-type': 'application/x-www-form-urlencoded' };
         }
-
     }
 
     angular.module('issueTracker.common', [])

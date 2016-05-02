@@ -24,8 +24,8 @@ angular.module('issueTracker.projects')
                 return requester.get(url + projectId);
             }
 
-            function addProject(params) {
-
+            function addProject(project) {
+                return requester.post(url, project);
             }
 
             function editProject(params) {
