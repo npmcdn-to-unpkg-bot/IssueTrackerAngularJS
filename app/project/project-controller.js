@@ -29,14 +29,13 @@ angular.module('issueTracker.projects',
     .controller('ProjectsController', ['$scope', '$routeParams', 'projectService',
         function ($scope, $routeParams, projectsService) {
 
-            var model = {};
-            model.Name = 'qqq project';
-            model.Description = 'qqq project is qqq';
-            model.ProjectKey = 'QP';
-            model.Labels = [];
-            model.Priorities = [];
-            model.LeadId = '7bf29bd7-1845-471a-b445-12fad7fad45d';
+            projectsService.getProjectById($routeParams.projectId).then(
+                function (response) {
+                    console.log(response);
+                });
 
-            projectsService.addProject(model);
+            $scope.test = function () {
+                console.log("test works");
+            }
         }
     ])

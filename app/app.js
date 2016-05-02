@@ -24,7 +24,7 @@ angular.module('issueTracker', [
                 $location.path('/');
             }
         });
-        authentication.refreshCookie();
+        authentication.refreshAuthorization();
     }])
     .constant('BASE_URL',
     'http://softuni-issue-tracker.azurewebsites.net');
