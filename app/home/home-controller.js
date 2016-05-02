@@ -9,12 +9,25 @@ angular.module('issueTracker.home', [
     }])
 
     .controller('HomeController', [
-        '$scope', 'authentication',
-        function HomeController($scope, authentication) {
-
+        '$scope', '$location', 'authentication',
+        function HomeController($scope, $location, authentication) {
+            var loginMode = true;
+            $scope.isAuthenticated = !authentication.isAuthenticated();
+            $scope.loginMode = loginMode;
+            $scope.toggleLogin = toggleLogin;
             $scope.login = function (user) {
+
                 console.log(user);
-                authentication.loginUser(user);
+
+                authentication.loginUser(user)
+                    .then(function (params) {
+                        $location.path("/issues");
+                    });
             };
+
+            function toggleLogin() {
+                loginMode = !loginMode;
+                $scope.loginMode = loginMode;
+            }
         }
     ]);

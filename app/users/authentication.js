@@ -4,7 +4,8 @@ angular.module('issueTracker.users.authentication', [])
 
             return {
                 loginUser: loginUser,
-                refreshCookie: refreshCookie
+                refreshCookie: refreshCookie,
+                isAuthenticated:isAuthenticated
             }
 
             function loginUser(user) {
@@ -13,13 +14,18 @@ angular.module('issueTracker.users.authentication', [])
                     + user.email + "&password=" + user.password;
                 console.log(loginUserData);
 
-                requester.post('api/Token', loginUserData)
+               return requester.post('api/Token', loginUserData)
                     .then(function (response) {
                         accessToken = response.access_token;
                         requester.setAuthorization(accessToken);
                         identity.saveUserData(accessToken);
-
                     });
+                    
+                    
+            }
+
+            function isAuthenticated() {
+                return !!identity.getUserData();
             }
 
             function refreshCookie() {
