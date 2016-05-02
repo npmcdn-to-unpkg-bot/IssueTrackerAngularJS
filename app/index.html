@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" ng-app="issueTracker" class="no-js">
+
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -10,8 +11,11 @@
   <link rel="stylesheet" href="bower_components/html5-boilerplate/dist/css/main.css">
   <link rel="stylesheet" href="app.css">
   <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+  <script src="bower_components/jquery/dist/jquery.min.js"></script>
+  <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
   <script src="bower_components/html5-boilerplate/dist/js/vendor/modernizr-2.8.3.min.js"></script>
 </head>
+
 <body>
 
   <div ng-view></div>
@@ -21,8 +25,13 @@
   -->
   <script src="bower_components/angular/angular.js"></script>
   <script src="bower_components/angular-route/angular-route.js"></script>
-  
+  <script src="/../node_modules/angular-local-storage/dist/angular-local-storage.min.js"></script>
+
+  <script src="common/requester.js"></script>
+  <script src="users/authentication.js"></script>
+  <script src="users/identity.js"></script>
+  <script src="home/home-controller.js"></script>
   <script src="app.js"></script>
-  <script src="users/UsersController.js"></script>
 </body>
+
 </html>

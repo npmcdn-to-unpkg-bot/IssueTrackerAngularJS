@@ -2,8 +2,14 @@
 
 angular.module('issueTracker', [
     'ngRoute',
-    'issueTracker.users'])
-    
+    'LocalStorageModule',
+    'issueTracker.home',
+    'issueTracker.common',
+    'issueTracker.users.authentication'])
+
     .config(['$routeProvider', function ($routeProvider) {
         $routeProvider.otherwise({ redirectTo: '/' });
-    }]);
+    }])
+    .constant('BASE_URL',
+    'http://softuni-issue-tracker.azurewebsites.net');
+
