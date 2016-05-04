@@ -1,0 +1,69 @@
+<div class="text-center jumbotron">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Issue</h3>
+                </div>
+                <div class="panel-body">
+
+                    <form class="form-horizontal">
+                        <fieldset>
+
+                            <div class="form-group">
+                                <label for="issueName" class="col-md-4 control-label">Project</label>
+                                <div class="col-md-8" class="form-control">
+                                    <div class="form-control">
+                                        {{issue.Title}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="assignee" class="col-md-4 control-label">Assignee</label>
+                                <div class="col-md-8">
+                                    <input id="assignee" class="form-control" placeholder="Assignee" type="text">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="dueDate" class="col-md-4 control-label">Due Date</label>
+                                <div class="col-md-8">
+                                    <input id="dueDate" class="form-control" placeholder="Due Date" type="text">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="issuePriority" class="col-md-4 control-label">Issue priority</label>
+                                <div class="col-md-8">
+                                    <input id="issuePriority" class="form-control" placeholder="Issue priority" type="text">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="issueLabel" class="col-md-4 control-label">Issue label</label>
+                                <div class="col-md-8">
+                                    <input id="issueLabel" class="form-control" placeholder="Issue label" type="text">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="issueTitle" class="col-md-4 control-label">Issue title</label>
+                                <div class="col-md-8">
+                                    <input id="issueTitle" class="form-control" placeholder="Issue title" type="text">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="issueDescription" class="col-md-4 control-label">Issue description</label>
+                                <div class="col-md-8">
+                                    <textarea id="issueDescription" class="form-control" placeholder="Issue description" type="text"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <button class="btn btn-primary">Add issue</button>
+                            </div>
+
+                            <fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

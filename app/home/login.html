@@ -11,7 +11,7 @@
         </div>
     </div>
 </nav>
-<div class="row" ng-show="loginMode">
+<div class="row" ng-if="!isAuthenticated" ng-show="loginMode">
     <div class="col-centered col-md-4">
         <div class="well bs-component">
             <form class="form-horizontal">
@@ -33,3 +33,89 @@
 </div>
 {{ loginMode }}
 <button class="btn btn-primary" ng-click="toggleLogin()">Login</button>
+<div class="row" ng-if="isAuthenticated">
+    <div class="text-center jumbotron">
+        <div class="border col-md-12">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">My issues</h3>
+                </div>
+                <div class="panel-body">
+                    <table class="table table-striped table-hover ">
+                        <thead>
+                            <tr>
+                                <th>Issue Name</th>
+                                <th>Due Date</th>
+                                <th>View Issue</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="issue in issues" ng-class-even="'even-class'" ng-class-odd="'odd-class'">
+                                <td class="text-center">
+                                    {{issue.Title}}
+                                </td>
+                                <td class="text-center">
+                                    {{issue.DueDate}}
+                                </td>
+                                <td><a href="#/issue/{{issue.Id}}" class="btn btn-primary">View</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="border col-md-6">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Projects leader</h3>
+                    </div>
+                    <div class="panel-body">
+                        <table class="table table-striped table-hover ">
+                            <thead>
+                                <tr>
+                                    <th>Project</th>
+                                    <th>View project</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="project in projects" ng-class-even="'even-class'" ng-class-odd="'odd-class'">
+                                    <td class="text-center">
+                                        {{project.Name}}
+                                    </td>
+                                    <td><button class="btn btn-primary">View</button></td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="border col-md-6">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Projects has issues in</h3>
+                    </div>
+                    <div class="panel-body">
+                        <table class="table table-striped table-hover ">
+                            <thead>
+                                <tr>
+                                    <th>Project</th>
+                                    <th>View project</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                 <tr ng-repeat="project in projectsByIssue" ng-class-even="'even-class'" ng-class-odd="'odd-class'">
+                                    <td class="text-center">
+                                        {{project.Name}}
+                                    </td>
+                                    <td><button class="btn btn-primary">View</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
