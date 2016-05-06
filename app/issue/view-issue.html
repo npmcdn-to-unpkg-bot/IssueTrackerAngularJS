@@ -88,6 +88,7 @@
                                 <button class="btn btn-primary" ng-click="changeIssueStatus(status)">Change to {{status.Name}}</button>
                             </td>
                         </tr>
+                        <div ng-show="!issue.AvailableStatuses.length">Issue is closed!</div>
                     </table>
                 </div>
             </div>

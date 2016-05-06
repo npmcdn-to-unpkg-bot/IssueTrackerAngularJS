@@ -1,11 +1,11 @@
 angular.module('issueTracker.issues')
     .config(['$routeProvider', function ($routeProvider) {
-        $routeProvider.when('/projects/:projectId/add-issue', {
-            templateUrl: 'issue/add-issue.html',
-            controller: 'AddIsssueController',
+        $routeProvider.when('/projects/add', {
+            templateUrl: 'project/add-project.html',
+            controller: 'AddProjectController',
         });
     }])
-    .controller('AddIsssueController', [
+    .controller('AddProjectController', [
         '$scope', '$location', '$routeParams',
         'identity', 'issueService', 'projectService',
         'labelsService',
@@ -18,40 +18,26 @@ angular.module('issueTracker.issues')
                     $scope.users = response;
                 });
 
-            projectService.getProjectById($routeParams.projectId)
-                .then(function (response) {
-                    console.log(response);
-                    $scope.project = response;
-                });
+            $scope.addProject = function addIssue(project) {
 
-            $scope.addIssue = function addIssue(issueToAdd) {
-                console.log(issueToAdd);
-                issueToAdd.ProjectId = $routeParams.projectId;
-                issueToAdd.PriorityId = issueToAdd.Priority.Id;
-                var labelsTemp = issueToAdd.Label.split(/,\s*/);
-                issueToAdd.Labels = [];
+                var labelsTemp = project.Label.split(/,\s*/);
+                project.Labels = [];
                 labelsTemp.forEach(function name(label) {
-                    issueToAdd.Labels.push({ Name: label });
+                    project.Labels.push({ Name: label });
                 });
-                issueToAdd.AssigneeId = issueToAdd.Assignee.Id;
-                delete issueToAdd.Label;
-                delete issueToAdd.Assignee;
-                delete issueToAdd.Priority;
-                console.log(issueToAdd);
-                issueService.addIssue(issueToAdd);
+                var prioritiesTemp = project.Priority.split(/,\s*/);
+                project.Priorities = [];
+                prioritiesTemp.forEach(function name(priority) {
+                    project.Priorities.push({ Name: priority });
+                });
+                project.LeadId = project.Lead.Id;
+                delete project.Label;
+                delete project.Lead;
+                delete project.Priority;
+                console.log(project);
+
+                projectService.addProject(project);
             }
-
-
-
-            $scope.openDate = function () {
-                $scope.popup.opened = true;
-            };
-
-            $scope.popup = {
-                opened: false
-            };
-
-            $scope.format = 'dd-MMMM-yyyy'
 
             $scope.dirty = {};
 

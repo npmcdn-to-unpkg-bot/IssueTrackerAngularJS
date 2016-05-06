@@ -9,7 +9,6 @@
 
                     <form class="form-horizontal">
                         <fieldset>
-
                             <div class="form-group">
                                 <label for="projectName" class="col-md-4 control-label">Project</label>
                                 <div class="col-md-8">
@@ -46,8 +45,8 @@
                             </div>
                             <div class="form-group">
                                 <label for="issueLabel" class="col-md-4 control-label">Issue label</label>
-                                <div class="col-md-8">
-                                    <input id="issueLabel" class="form-control" placeholder="Issue label" type="text" ng-model="issue.Label">
+                                <div class="col-md-8" mass-autocomplete>
+                                    <input class="form-control" id="issueLabel" ng-model="issue.Label" mass-autocomplete-item="ac_option_delimited ">
                                 </div>
                             </div>
 
@@ -67,8 +66,8 @@
                             <div class="form-group">
                                 <button class="btn btn-primary" ng-click="addIssue(issue)">Add issue</button>
                             </div>
+                        </fieldset>
 
-                            <fieldset>
                     </form>
                 </div>
             </div>

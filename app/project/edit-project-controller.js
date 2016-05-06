@@ -1,11 +1,11 @@
 angular.module('issueTracker.issues')
     .config(['$routeProvider', function ($routeProvider) {
-        $routeProvider.when('/projects/:projectId/add-issue', {
-            templateUrl: 'issue/add-issue.html',
-            controller: 'AddIsssueController',
+        $routeProvider.when('/projects/:projectId/edit', {
+            templateUrl: 'project/edit-project.html',
+            controller: 'EditProjectController',
         });
     }])
-    .controller('AddIsssueController', [
+    .controller('EditProjectController', [
         '$scope', '$location', '$routeParams',
         'identity', 'issueService', 'projectService',
         'labelsService',
@@ -15,43 +15,37 @@ angular.module('issueTracker.issues')
             authentication.getAllUsers()
                 .then(function (response) {
                     console.log(response);
+
                     $scope.users = response;
                 });
-
             projectService.getProjectById($routeParams.projectId)
-                .then(function (response) {
-                    console.log(response);
+                .then(function name(response) {
+                    response.Priority = response.Priorities.map(x => x.Name).join(", ");
+                    response.Label = response.Labels.map(x => x.Name).join(", ");
                     $scope.project = response;
                 });
 
-            $scope.addIssue = function addIssue(issueToAdd) {
-                console.log(issueToAdd);
-                issueToAdd.ProjectId = $routeParams.projectId;
-                issueToAdd.PriorityId = issueToAdd.Priority.Id;
-                var labelsTemp = issueToAdd.Label.split(/,\s*/);
-                issueToAdd.Labels = [];
+            $scope.addProject = function addIssue(project) {
+
+                var labelsTemp = project.Label.split(/,\s*/);
+                project.Labels = [];
                 labelsTemp.forEach(function name(label) {
-                    issueToAdd.Labels.push({ Name: label });
+                    project.Labels.push({ Name: label });
                 });
-                issueToAdd.AssigneeId = issueToAdd.Assignee.Id;
-                delete issueToAdd.Label;
-                delete issueToAdd.Assignee;
-                delete issueToAdd.Priority;
-                console.log(issueToAdd);
-                issueService.addIssue(issueToAdd);
+                var prioritiesTemp = project.Priority.split(/,\s*/);
+                project.Priorities = [];
+                prioritiesTemp.forEach(function name(priority) {
+                    project.Priorities.push({ Name: priority });
+                });
+                project.LeadId = project.Lead.Id;
+                delete project.Label;
+                delete project.Lead;
+                delete project.Priority;
+                delete project.ProjectKey;
+                console.log(project);
+
+                projectService.editProject(project);
             }
-
-
-
-            $scope.openDate = function () {
-                $scope.popup.opened = true;
-            };
-
-            $scope.popup = {
-                opened: false
-            };
-
-            $scope.format = 'dd-MMMM-yyyy'
 
             $scope.dirty = {};
 
