@@ -1,0 +1,21 @@
+<div class="col-centered col-md-4">
+    <div class="well bs-component">
+        <form class="form-horizontal">
+            <fieldset>
+                <legend>Login</legend>
+                <div class="form-group">
+                    <label for="oldPassword">Old password</label>
+                    <input id="oldPassword" required="required" ng-model="data.OldPassword" type="password" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label for="newPassword">New password</label>
+                    <input id="newPassword" required="required" ng-model="data.NewPassword" type="password" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label for="repeatPassword">Repeat password</label>
+                    <input id="repeatPassword" required="required" type="data.ConfirmPassword" class="form-control" />
+                </div>
+                <button class="btn btn-primary" ng-disabled="loginUserForm.$invalid || newPassword != repeatPassword"  ng-click=" changePassword(data) ">Login</button>
+            </fieldset>
+        </form>
+    </div>

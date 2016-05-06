@@ -9,8 +9,11 @@ angular.module('issueTracker.issues')
         '$scope', '$location', '$routeParams',
         'identity', 'issueService', 'projectService',
         'labelsService',
-        'authentication', '$sce', '$q',
-        function ($scope, $location, $routeParams, identity, issueService, projectService, labelsService, authentication, $sce, $q) {
+        'authentication', '$sce', '$q', 'notifier',
+        function ($scope, $location,
+            $routeParams, identity, issueService,
+            projectService, labelsService, authentication,
+            $sce, $q, notifier) {
 
             authentication.getAllUsers()
                 .then(function (response) {
@@ -39,6 +42,7 @@ angular.module('issueTracker.issues')
                 delete issueToAdd.Priority;
                 console.log(issueToAdd);
                 issueService.addIssue(issueToAdd);
+                notifier.success("Issue added!");
             }
 
 

@@ -9,8 +9,8 @@ angular.module('issueTracker.home', [
     }])
 
     .controller('HomeController', [
-        '$scope', '$location', 'identity', 'authentication', 'issueService', 'projectService',
-        function HomeController($scope, $location, identity, authentication, issueService, projectService) {
+        '$scope', '$location', 'notifier', 'identity', 'authentication', 'issueService', 'projectService',
+        function HomeController($scope, $location, notifier, identity, authentication, issueService, projectService) {
             var loginMode = true;
             $scope.isAuthenticated = authentication.isAuthenticated();
             $scope.loginMode = loginMode;
@@ -21,7 +21,8 @@ angular.module('issueTracker.home', [
 
                 authentication.loginUser(user)
                     .then(function (params) {
-                        $location.path("/issues");
+                        notifier.success('Successfully logged in!');
+                        $location.path("/");
                     });
             };
 
@@ -29,7 +30,7 @@ angular.module('issueTracker.home', [
                 loginMode = !loginMode;
                 $scope.loginMode = loginMode;
             }
-            if (authentication.isAuthenticated()){
+            if (authentication.isAuthenticated()) {
                 $scope.viewProject = function (projectId) {
                     $location.path('/projects/' + projectId);
                 }

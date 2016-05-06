@@ -7,9 +7,10 @@ angular.module('issueTracker.users.logout',
             templateUrl: 'users/logout.html',
         });
     }])
-    .controller('LogoutController', ['authentication', '$location',
-        function (authentication, $location) {
+    .controller('LogoutController', ['$location', 'authentication', 'notifier',
+        function ($location, authentication, notifier) {
             authentication.logout();
+            notifier.success('Successfully logged out. Goodbye!');
             $location.path('/home');
         }
     ])

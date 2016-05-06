@@ -38,7 +38,6 @@ angular.module('issueTracker.users.authentication', [])
                 if (isAuthenticated()) {
                     requester.setAuthorization(identity.getUserData().accessToken);
                 }
-
             }
 
             function getAllUsers(user) {
