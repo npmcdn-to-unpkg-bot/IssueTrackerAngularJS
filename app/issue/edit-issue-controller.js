@@ -10,19 +10,19 @@ angular.module('issueTracker.issues')
         function ($scope, $location, $routeParams, identity, issueService) {
             issueService.getIssueById($routeParams.issueId).then(
                 function (response) {
+                    response.DueDate = new Date(response.DueDate);
                     $scope.issue = response;
                 });
 
-            $scope.open1 = function () {
-                $scope.popup1.opened = true;
+            $scope.openDate = function () {
+                $scope.popup.opened = true;
             };
 
-            $scope.popup1 = {
+            $scope.popup = {
                 opened: false
             };
 
-            $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
-            $scope.format = $scope.formats[0];
+            $scope.format = 'dd-MMMM-yyyy'
 
             $scope.editIssue = function () {
                 updated = {};

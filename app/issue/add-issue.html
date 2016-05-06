@@ -1,6 +1,6 @@
 <div class="text-center jumbotron">
     <div class="row">
-        <div class="col-md-8">
+        <div class="col-md-5">
             <div class="panel panel-primary">
                 <div class="panel-heading">
                     <h3 class="panel-title">Issue</h3>
@@ -19,7 +19,8 @@
                             <div class="form-group">
                                 <label for="assignee" class="col-md-4 control-label">Assignee</label>
                                 <div class="col-md-8">
-                                    <select id="assignee" ng-required="true" ng-options="user.Username for user in users track by user.Id" ng-model="issue.Assignee"></select>
+                                    <select id="assignee" class="form-control" ng-required="true" ng-options="user.Username for user in users track by user.Id"
+                                        ng-model="issue.Assignee"></select>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -39,7 +40,7 @@
                             <div class="form-group">
                                 <label for="issuePriority" class="col-md-4 control-label">Issue priority</label>
                                 <div class="col-md-8">
-                                    <select id="issuePriority" ng-required="true" ng-options="priority.Name for priority in project.Priorities track by priority.Id"
+                                    <select class="form-control" id="issuePriority" ng-required="true" ng-options="priority.Name for priority in project.Priorities track by priority.Id"
                                         ng-model="issue.Priority"></select>
                                 </div>
                             </div>

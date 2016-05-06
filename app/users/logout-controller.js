@@ -4,7 +4,7 @@ angular.module('issueTracker.users.logout',
     .config(['$routeProvider', function ($routeProvider) {
         $routeProvider.when('/logout', {
             controller: 'LogoutController',
-            templateUrl: '/',
+            templateUrl: 'users/logout.html',
         });
     }])
     .controller('LogoutController', ['authentication', '$location',

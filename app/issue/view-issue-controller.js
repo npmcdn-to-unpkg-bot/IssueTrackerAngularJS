@@ -13,4 +13,15 @@ angular.module('issueTracker.issues')
                     console.log(response);
                     $scope.issue = response;
                 });
+
+            $scope.changeIssueStatus = function (status) {
+                issueService.changeIssueStatus($scope.issue.Id, status.Id)
+                    .then(function name(params) {
+                        issueService.getIssueById($routeParams.issueId).then(
+                            function (response) {
+                                console.log(response);
+                                $scope.issue = response;
+                            });
+                    });
+            }
         }]);

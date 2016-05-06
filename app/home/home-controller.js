@@ -2,7 +2,7 @@ angular.module('issueTracker.home', [
     'issueTracker.users.authentication'])
 
     .config(['$routeProvider', function ($routeProvider) {
-        $routeProvider.when('/home', {
+        $routeProvider.when('/', {
             templateUrl: 'home/login.html',
             controller: 'HomeController',
         })

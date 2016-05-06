@@ -1,6 +1,6 @@
 angular.module('issueTracker.users.authentication', [])
-    .factory('authentication', ['requester', 'identity',
-        function (requester, identity) {
+    .factory('authentication', ['$location', 'requester', 'identity',
+        function ($location, requester, identity) {
 
             return {
                 loginUser: loginUser,
@@ -24,6 +24,7 @@ angular.module('issueTracker.users.authentication', [])
                             .then(function (data) {
                                 data.accessToken = accessToken;
                                 identity.saveUserData(data);
+                                $location.path('#/');
                             })
                     });
 

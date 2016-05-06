@@ -23,7 +23,7 @@ angular.module('issueTracker.issues')
             }
 
             function changeIssueStatus(issueId, statusId) {
-                return requester.put(url + issueId + '?changeStatus=' + statusId);
+                return requester.put(url + issueId + '/changeStatus?statusid=' + statusId);
             }
 
             function editIssue(issue) {
@@ -42,8 +42,8 @@ angular.module('issueTracker.issues')
                 return requester.post(url + issueId + '/comments', comment);
             }
             
-             function getIssuesByProject(comment) {
-                
+             function getIssuesByProject(projectId) {
+                return requester.get('Projects/' + projectId + '/issues');
             }
         }
     ]);
