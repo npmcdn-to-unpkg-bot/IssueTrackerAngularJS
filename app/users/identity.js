@@ -5,16 +5,20 @@ angular.module('issueTracker.users.identity', [])
 
             return {
                 getUserData: getUserData,
-                saveUserData: saveUserData
+                saveUserData: saveUserData,
+                deleteUserData: deleteUserData
             }
 
             function saveUserData(userToken) {
                 localStorageService.set(key, userToken);
-
             }
 
             function getUserData() {
                 return localStorageService.get(key);
+            }
+            
+             function deleteUserData() {
+                return localStorageService.remove(key);
             }
         }
     ]);

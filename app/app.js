@@ -10,6 +10,7 @@ angular.module('issueTracker', [
     'issueTracker.common',
     'issueTracker.issues',
     'issueTracker.projects',
+    'issueTracker.users.logout',
     'issueTracker.users.identity',
     'issueTracker.users.authentication'])
 

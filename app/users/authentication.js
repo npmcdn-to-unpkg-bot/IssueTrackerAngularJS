@@ -6,7 +6,8 @@ angular.module('issueTracker.users.authentication', [])
                 loginUser: loginUser,
                 refreshAuthorization: refreshAuthorization,
                 isAuthenticated: isAuthenticated,
-                getAllUsers: getAllUsers
+                getAllUsers: getAllUsers,
+                logout: logout
             }
 
             function loginUser(user) {
@@ -42,7 +43,10 @@ angular.module('issueTracker.users.authentication', [])
             function getAllUsers(user) {
                 return requester.get('Users/');
             }
+
+            function logout(user) {
+                requester.setAuthorization(undefined);
+                identity.deleteUserData();
+            }
         }
-
-
     ]);
