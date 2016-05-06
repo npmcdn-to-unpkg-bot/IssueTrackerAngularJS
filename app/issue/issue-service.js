@@ -26,8 +26,8 @@ angular.module('issueTracker.issues')
                 return requester.put(url + issueId + '?changeStatus=' + statusId);
             }
 
-            function editIssue(params) {
-                return requester.put(url, issue);
+            function editIssue(issue) {
+                return requester.put(url + issue.Id, issue);
             }
 
             function addIssue(issue) {

@@ -10,6 +10,7 @@ angular.module('issueTracker.issues')
         function ($scope, $location, $routeParams, identity, issueService) {
             issueService.getIssueById($routeParams.issueId).then(
                 function (response) {
+                    console.log(response);
                     $scope.issue = response;
                 });
         }]);

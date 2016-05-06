@@ -1,0 +1,83 @@
+<div class="text-center jumbotron">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Issue</h3>
+                </div>
+                <div class="panel-body">
+                    <form class="form-horizontal">
+                        <fieldset>
+
+                            <div class="form-group">
+                                <label for="projectName" class="col-md-4 control-label">Project</label>
+                                <div class="col-md-8">
+                                    <select class="form-control">
+                                                <option value="volvo">Volvo</option>
+                                                <option value="saab">Saab</option>
+                                                <option value="mercedes">Mercedes</option>
+                                                <option value="audi">Audi</option>
+                                            </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="assignee" class="col-md-4 control-label">Assignee</label>
+                                <div class="col-md-8">
+                                    <input id="assignee" class="form-control" placeholder="Assignee" type="text">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="dueDate" class="col-md-4 control-label">Due Date</label>
+                                <div class="col-md-8">
+                                    <input id="dueDate" class="form-control" placeholder="Due Date" type="text">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="issuePriority" class="col-md-4 control-label">Issue priority</label>
+                                <div class="col-md-8">
+                                    <input id="issuePriority" class="form-control" placeholder="Issue priority" type="text">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="issueLabel" class="col-md-4 control-label">Issue label</label>
+                                <div class="col-md-8">
+                                    <input id="issueLabel" class="form-control" placeholder="Issue label" type="text">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="issueTitle" class="col-md-4 control-label">Issue title</label>
+                                <div class="col-md-8">
+                                    <input ng-model="issue.DueDate" id="issueTitle" class="form-control" placeholder="Issue title" type="text">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="issueDescription" class="col-md-4 control-label">Issue description</label>
+                                <div class="col-md-8">
+                                    <textarea ng-model="issue.Description" id="issueDescription" class="form-control" placeholder="Issue description" type="text"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <button ng-click="editIssue()" class="btn btn-primary">Add issue</button>
+                            </div>
+                            <h4>Popup</h4>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <p class="input-group">
+                                        <input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="issue.DueDate" is-open="popup1.opened"
+                                            datepicker-options="dateOptions" ng-required="true" close-text="Close" 
+                                        />
+                                        <span class="input-group-btn">
+            <button type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
+          </span>
+                                    </p>
+                                </div>
+
+                                <fieldset>
+                    </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

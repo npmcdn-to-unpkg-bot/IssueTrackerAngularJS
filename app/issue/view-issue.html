@@ -11,8 +11,8 @@
                         <fieldset>
 
                             <div class="form-group">
-                                <label for="issueName" class="col-md-4 control-label">Project</label>
-                                <div class="col-md-8" class="form-control">
+                                <label for="issueName" class="col-md-4 control-label">Issue title</label>
+                                <div class="col-md-8">
                                     <div class="form-control">
                                         {{issue.Title}}
                                     </div>
@@ -21,39 +21,42 @@
                             <div class="form-group">
                                 <label for="assignee" class="col-md-4 control-label">Assignee</label>
                                 <div class="col-md-8">
-                                    <input id="assignee" class="form-control" placeholder="Assignee" type="text">
+                                    <div class="form-control">
+                                        {{issue.Assignee.Username}}
+                                    </div>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="dueDate" class="col-md-4 control-label">Due Date</label>
                                 <div class="col-md-8">
-                                    <input id="dueDate" class="form-control" placeholder="Due Date" type="text">
+                                    <div class="form-control">
+                                        {{issue.DueDate}}
+                                    </div>
                                 </div>
                             </div>
                             <div class="form-group">
+
                                 <label for="issuePriority" class="col-md-4 control-label">Issue priority</label>
                                 <div class="col-md-8">
-                                    <input id="issuePriority" class="form-control" placeholder="Issue priority" type="text">
+                                    <div class="form-control">
+                                        {{issue.Priority.Name}}
+                                    </div>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="issueLabel" class="col-md-4 control-label">Issue label</label>
                                 <div class="col-md-8">
-                                    <input id="issueLabel" class="form-control" placeholder="Issue label" type="text">
+                                    <div class="form-control">
+                                        <span ng-repeat="label in issue.Labels">{{label.Name}}</span>
+                                    </div>
                                 </div>
                             </div>
-
-                            <div class="form-group">
-                                <label for="issueTitle" class="col-md-4 control-label">Issue title</label>
-                                <div class="col-md-8">
-                                    <input id="issueTitle" class="form-control" placeholder="Issue title" type="text">
-                                </div>
-                            </div>
-
                             <div class="form-group">
                                 <label for="issueDescription" class="col-md-4 control-label">Issue description</label>
                                 <div class="col-md-8">
-                                    <textarea id="issueDescription" class="form-control" placeholder="Issue description" type="text"></textarea>
+                                    <div class="form-control">
+                                        {{issue.Description}}
+                                    </div>
                                 </div>
                             </div>
                             <div class="form-group">

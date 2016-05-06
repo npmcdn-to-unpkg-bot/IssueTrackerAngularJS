@@ -2,6 +2,8 @@
 
 angular.module('issueTracker', [
     'ngRoute',
+    'ui.bootstrap.tpls',
+    'ui.bootstrap.datepickerPopup',
     'angular-loading-bar',
     'LocalStorageModule',
     'issueTracker.home',
