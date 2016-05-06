@@ -1,7 +1,7 @@
-<div class="row" ng-if="!isAuthenticated" ng-show="loginMode">
+<div class="row" ng-if="!isAuthenticated && loginMode">
     <div class="col-centered col-md-4">
         <div class="well bs-component">
-            <form class="form-horizontal">
+            <form class="form-horizontal" id="loginForm">
                 <fieldset>
                     <legend>Login</legend>
                     <div class="form-group">
@@ -13,11 +13,39 @@
                         <input type="password" required="required" ng-model="loginUser.password" id="password" class="form-control" />
                     </div>
                     <button class="btn btn-primary" ng-disabled="loginUserForm.$invalid" ng-click="login(loginUser)">Login</button>
+                    OR
+                    <button class="btn btn-primary" ng-disabled="loginUserForm.$invalid" ng-click="toggleLogin()">Register</button>
                 </fieldset>
             </form>
         </div>
     </div>
-    <button class="btn btn-primary" ng-click="toggleLogin()">Login</button>
+</div>
+
+<div class="row" ng-if="!isAuthenticated && !loginMode">
+    <div class="col-centered col-md-4">
+        <div class="well bs-component">
+            <form class="form-horizontal" id="registerForm">
+                <fieldset>
+                    <legend>Register</legend>
+                    <div class="form-group">
+                        <label for="username">Email</label>
+                        <input type="text" id="username" required="required" ng-model="registerUser.Email" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label for="registerPassword">Password</label>
+                        <input id="registerPassword" required="required" ng-model="registerUser.Password" type="password" class="form-control" />
+                    </div>            
+                    <div class="form-group">
+                        <label for="confirmPassword">Confirm password</label>
+                        <input id="confirmPassword" required="required" ng-model="registerUser.ConfirmPassword" type="password" class="form-control" />
+                    </div>
+                    <button class="btn btn-primary" ng-disabled="loginUserForm.$invalid" ng-click="register(registerUser)">Register</button>
+                    OR
+                    <button class="btn btn-primary" ng-disabled="loginUserForm.$invalid" ng-click="toggleLogin()">Login</button>
+                </fieldset>
+            </form>
+        </div>
+    </div>
 </div>
 
 <div class="row" ng-if="isAuthenticated">

@@ -1,4 +1,4 @@
-angular.module('issueTracker.issues')
+angular.module('issueTracker.projects')
     .config(['$routeProvider', function ($routeProvider) {
         $routeProvider.when('/projects/:projectId/edit', {
             templateUrl: 'project/edit-project.html',

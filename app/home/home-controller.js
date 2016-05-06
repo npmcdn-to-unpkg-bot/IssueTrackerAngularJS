@@ -11,9 +11,8 @@ angular.module('issueTracker.home', [
     .controller('HomeController', [
         '$scope', '$location', 'notifier', 'identity', 'authentication', 'issueService', 'projectService',
         function HomeController($scope, $location, notifier, identity, authentication, issueService, projectService) {
-            var loginMode = true;
             $scope.isAuthenticated = authentication.isAuthenticated();
-            $scope.loginMode = loginMode;
+            $scope.loginMode = true;
             $scope.toggleLogin = toggleLogin;
             $scope.login = function (user) {
 
@@ -21,14 +20,31 @@ angular.module('issueTracker.home', [
 
                 authentication.loginUser(user)
                     .then(function (params) {
+                        console.log(user);
                         notifier.success('Successfully logged in!');
                         $location.path("/");
+
+                    }, function error() {
+                        notifier.error('Invalid login details!');
+                    });
+            };
+
+            $scope.register = function (user) {
+                authentication.registerUser(user)
+                    .then(function success() {
+                        notifier.success('Successfully registered!');
+
+                        var userToLogIn = {};
+                        userToLogIn.email = user.Email;
+                        userToLogIn.password = user.Password;
+                        $scope.login(userToLogIn);
+                    }, function error() {
+                        notifier.error('Invalid register details!');
                     });
             };
 
             function toggleLogin() {
-                loginMode = !loginMode;
-                $scope.loginMode = loginMode;
+                $scope.loginMode = !$scope.loginMode;
             }
             if (authentication.isAuthenticated()) {
                 $scope.viewProject = function (projectId) {

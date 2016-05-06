@@ -1,5 +1,4 @@
-angular.module('issueTracker.projects',
-    ['issueTracker.users.authentication'])
+angular.module('issueTracker.projects', [])
 
     .config(['$routeProvider', function ($routeProvider) {
         $routeProvider.when('/projects/:projectId', {

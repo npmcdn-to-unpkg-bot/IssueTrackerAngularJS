@@ -4,6 +4,8 @@ angular.module('issueTracker.common')
             $scope.isAuthenticated = authentication.isAuthenticated;
 
             $scope.identity = identity;
+            
+            $scope.isAdmin = authentication.isAdmin;
         }])
     .directive('headerDirective', function () {
         return {

@@ -4,10 +4,13 @@ angular.module('issueTracker.users.authentication', [])
 
             return {
                 loginUser: loginUser,
+                registerUser: registerUser,
                 refreshAuthorization: refreshAuthorization,
                 isAuthenticated: isAuthenticated,
                 getAllUsers: getAllUsers,
-                logout: logout
+                logout: logout,
+                changePassword: changePassword,
+                isAdmin: isAdmin
             }
 
             function loginUser(user) {
@@ -30,6 +33,10 @@ angular.module('issueTracker.users.authentication', [])
 
             }
 
+            function registerUser(user) {
+               return requester.post('api/Account/Register', user)
+            }
+
             function isAuthenticated() {
                 return !!identity.getUserData();
             }
@@ -47,6 +54,17 @@ angular.module('issueTracker.users.authentication', [])
             function logout(user) {
                 requester.setAuthorization(undefined);
                 identity.deleteUserData();
+            }
+
+            function changePassword(data) {
+                return requester.post('api/Account/ChangePassword', data);
+            }
+
+            function isAdmin() {
+                if (isAuthenticated()) {
+                    return identity.getUserData().isAdmin;
+                }
+                return false;
             }
         }
     ]);

@@ -15,7 +15,7 @@ angular.module('issueTracker.projects')
 
                 queryParams.pageNumber = pageNumber;
                 queryParams.pageSize = pageSize;
-                queryParams.filter = filters;
+                queryParams.filter = filters || 'Name.length > 0';
 
                 return requester.get(url, queryParams);
             }

@@ -1,18 +1,21 @@
-angular.module('issueTracker.users.logout',
+angular.module('issueTracker.users.profile',
     ['issueTracker.users.authentication'])
 
     .config(['$routeProvider', function ($routeProvider) {
         $routeProvider.when('/profile/password', {
-            controller: 'LogoutController',
-            templateUrl: 'users/logout.html',
+            controller: 'ProfileController',
+            templateUrl: 'users/profile.html',
         });
     }])
-    .controller('LogoutController', ['$scope', '$location', 'authentication', 'notifier',
+    .controller('ProfileController', ['$scope', '$location', 'authentication', 'notifier',
         function ($scope, $location, authentication, notifier) {
 
             $scope.changePassword = function changePassword(data) {
-                authentication.changePassword(data);
-                notifier.success('Successfully logged out. Goodbye!');
+                authentication.changePassword(data)
+                    .then(function success(params) {
+                        notifier.success('Successfully changed password!');
+                    });
+
             }
 
 
