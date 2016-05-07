@@ -12,6 +12,14 @@ angular.module('issueTracker.issues')
                 function (response) {
                     console.log(response);
                     $scope.issue = response;
+
+                    $scope.userIsAssignee = function () {
+                        return $scope.issue.Assignee.Id == identity.getUserData().Id;
+                    }
+
+                    $scope.userIsProjectLeader = function () {
+                        return $scope.issue.Author.Id == identity.getUserData().Id;
+                    }
                 });
 
             commentsService.getIssueComments($routeParams.issueId).then(

@@ -6,9 +6,9 @@ angular.module('issueTracker.projects', [])
             controller: 'ViewProjectController',
         });
     }])
-    .controller('ViewProjectController', ['$scope', '$routeParams', '$location', 'projectService',
+    .controller('ViewProjectController', ['$scope', '$routeParams', '$location', 'identity', 'projectService',
         'issueService',
-        function ($scope, $routeParams, $location, projectsService, issueService) {
+        function ($scope, $routeParams, $location, identity, projectsService, issueService) {
 
             projectsService.getProjectById($routeParams.projectId).then(
                 function (response) {
@@ -16,6 +16,9 @@ angular.module('issueTracker.projects', [])
                     response.Labels = response.Labels.map(x => x.Name).join(" ");
                     response.Priorities = response.Priorities.map(x => x.Name).join(" ");
                     $scope.project = response;
+                    $scope.userIsProjectLeader = function () {
+                        return $scope.project.Lead.Id == identity.getUserData().Id;
+                    }
                 });
 
             issueService.getIssuesByProject($routeParams.projectId).then(
@@ -31,5 +34,7 @@ angular.module('issueTracker.projects', [])
             $scope.addIssue = function () {
                 $location.path('/projects/' + $routeParams.projectId + '/add-issue');
             }
+
+
         }
     ])

@@ -1,6 +1,6 @@
 <div class="jumbotron">
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-7 col-centered">
 
             <div class="panel panel-primary">
                 <div class="panel-heading">
@@ -10,7 +10,7 @@
                 <div class="panel-body">
                     <form class="form-horizontal">
                         <fieldset>
-                            <div class="form-group">
+                            <div ng-if="isAdmin()" class="form-group">
                                 <label for="Leader" class="col-md-4 control-label">Project leader</label>
                                 <div class="col-md-8">
                                     <select id="Leader" class="form-control" ng-required="true" ng-options="user.Username for user in users track by user.Id"
@@ -43,7 +43,7 @@
                             </div>
                             <div class="form-group">
                                 <div class="col-offset-2 col-md-8">
-                                    <button class="btn btn-primary" ng-click="addProject(project)">Add issue</button>
+                                    <button class="btn btn-primary" ng-click="editProject(project)">Edit project</button>
                                 </div>
                             </div>
                             <fieldset>

@@ -65,7 +65,7 @@
                                     <textarea class="form-control" ng-model="issue.Description" />
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <div ng-if="userIsProjectLeader()" class="form-group">
                                 <a href="#/issue/{{issue.Id}}/edit" class="btn btn-primary">Edit issue</a>
                             </div>
 
@@ -74,7 +74,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-5">
+        <div ng-if="userIsProjectLeader() || userIsAssignee()" class="col-md-5">
             <div class="panel panel-primary">
                 <div class="panel-heading">
                     <h3 class="panel-title">Change status</h3>
@@ -92,7 +92,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-5">
+        <div ng-if="userIsProjectLeader() || userIsAssignee()" class="col-md-5">
             <div class="panel panel-primary">
                 <div class="panel-heading">
                     <h3 class="panel-title">Comments</h3>

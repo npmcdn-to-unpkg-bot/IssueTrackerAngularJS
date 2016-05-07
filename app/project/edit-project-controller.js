@@ -23,9 +23,11 @@ angular.module('issueTracker.projects')
                     response.Priority = response.Priorities.map(x => x.Name).join(", ");
                     response.Label = response.Labels.map(x => x.Name).join(", ");
                     $scope.project = response;
+                    
+                    $scope.isAdmin = authentication.isAdmin;
                 });
 
-            $scope.addProject = function addIssue(project) {
+            $scope.editProject = function editProject(project) {
 
                 var labelsTemp = project.Label.split(/,\s*/);
                 project.Labels = [];

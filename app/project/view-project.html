@@ -47,7 +47,7 @@
                                         type="text"></textarea>
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <div ng-if="userIsProjectLeader()" class="form-group">
                                 <div class="col-offset-2 col-md-8">
                                     <button class="btn btn-primary" ng-click="addIssue()">Add issue</button>
                                     <a class="btn btn-primary" href="#/projects/{{project.Id}}/edit">Edit Project</a>
@@ -78,7 +78,7 @@
                                     {{issue.Title}}
                                 </td>
                                 <td class="text-center">
-                                    {{issue.DueDate}}
+                                    {{issue.DueDate | dateFormater}}
                                 </td>
                                 <td><a href="#/issue/{{issue.Id}}" class="btn btn-primary">View</a></td>
                             </tr>
