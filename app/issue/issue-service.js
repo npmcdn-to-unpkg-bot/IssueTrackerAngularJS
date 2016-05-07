@@ -41,8 +41,8 @@ angular.module('issueTracker.issues')
             function addComment(comment) {
                 return requester.post(url + issueId + '/comments', comment);
             }
-            
-             function getIssuesByProject(projectId) {
+
+            function getIssuesByProject(projectId) {
                 return requester.get('Projects/' + projectId + '/issues');
             }
         }

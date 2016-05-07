@@ -5,9 +5,10 @@
         .controller('ViewIsssueController',
         ['$scope', '$location', '$routeParams',
             'identity', 'authentication', 'issueService',
-            'commentsService',
+            'commentsService', 'notifier',
             function ViewIsssueController($scope, $location, $routeParams,
-                identity, authentication, issueService, commentsService) {
+                identity, authentication, issueService, commentsService,
+                notifier) {
 
                 var currentIssueId = $routeParams.issueId;
 
@@ -45,6 +46,7 @@
                         .then(function success(response) {
                             commentsService.getIssueComments(currentIssueId)
                                 .then(function success(response) {
+                                    notifier.success('Comment added!');
                                     $scope.comments = response;
                                 });
                         })
