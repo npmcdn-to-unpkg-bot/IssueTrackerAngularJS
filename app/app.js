@@ -80,6 +80,7 @@ angular.module('issueTracker', [
         $routeProvider.when('/projects/:projectId/add-issue', {
             templateUrl: 'issue/add-issue.html',
             controller: 'AddIsssueController',
+            resolve: routeChecks.authenticated
         });
 
         $routeProvider.when('/projects', {
