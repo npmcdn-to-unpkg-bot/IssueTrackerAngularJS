@@ -1,5 +1,7 @@
 'use strict';
 
+angular.module('issueTracker.issues', []);
+
 angular.module('issueTracker', [
     'ngRoute',
     'ui.bootstrap.tpls',
@@ -39,6 +41,13 @@ angular.module('issueTracker', [
                 return $q.reject('Must be admin');
             }]
         }
+
+
+        $routeProvider.when('/issue/:issueId', {
+            templateUrl: 'issue/view-issue.html',
+            controller: 'ViewIsssueController',
+            resolve: routeChecks.authenticated
+        });
 
         $routeProvider.when('/issue/:issueId/edit', {
             templateUrl: 'issue/edit-issue.html',
