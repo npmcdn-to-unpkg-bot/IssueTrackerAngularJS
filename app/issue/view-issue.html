@@ -1,6 +1,6 @@
 <div class="text-center jumbotron">
     <div class="row">
-        <div class="col-md-8">
+        <div class="col-md-7">
             <div class="panel panel-primary">
                 <div class="panel-heading">
                     <h3 class="panel-title">Issue</h3>
@@ -66,7 +66,7 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <button class="btn btn-primary">Add issue</button>
+                                <a href="#/issue/{{issue.Id}}/edit" class="btn btn-primary">Edit issue</a>
                             </div>
 
                             <fieldset>
@@ -74,13 +74,12 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-5">
             <div class="panel panel-primary">
                 <div class="panel-heading">
                     <h3 class="panel-title">Change status</h3>
                 </div>
                 <div class="panel-body">
-
                     <table class="col-md-12">
                         <tr ng-repeat="status in issue.AvailableStatuses">
 
@@ -90,6 +89,25 @@
                         </tr>
                         <div ng-show="!issue.AvailableStatuses.length">Issue is closed!</div>
                     </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-5">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Comments</h3>
+                </div>
+                <div class="panel-body">
+
+                    <table class="col-md-12">
+                        <tr ng-repeat="comment in comments">
+                            <td class="text-center">
+                                {{comment.Text}}
+                            </td>
+                        </tr>
+                    </table>
+                    <textarea class="col-md-12" type="text" ng-model="commentToAdd.Text" />
+                    <button class="btn btn-primary" ng-click="addComment(commentToAdd)">Add new comment</button>
                 </div>
             </div>
         </div>

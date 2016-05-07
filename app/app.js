@@ -14,6 +14,7 @@ angular.module('issueTracker', [
     'issueTracker.common',
     'issueTracker.filters',
     'issueTracker.labels',
+    'issueTracker.comments',
     'issueTracker.issues',
     'issueTracker.projects',
     'issueTracker.users.logout',

@@ -6,12 +6,18 @@ angular.module('issueTracker.issues')
         });
     }])
     .controller('ViewIsssueController',
-    ['$scope', '$location', '$routeParams', 'identity', 'issueService',
-        function ($scope, $location, $routeParams, identity, issueService) {
+    ['$scope', '$location', '$routeParams', 'identity', 'issueService', 'commentsService',
+        function ($scope, $location, $routeParams, identity, issueService, commentsService) {
             issueService.getIssueById($routeParams.issueId).then(
                 function (response) {
                     console.log(response);
                     $scope.issue = response;
+                });
+
+            commentsService.getIssueComments($routeParams.issueId).then(
+                function (response) {
+                    console.log(response);
+                    $scope.comments = response;
                 });
 
             $scope.changeIssueStatus = function (status) {
@@ -23,5 +29,16 @@ angular.module('issueTracker.issues')
                                 $scope.issue = response;
                             });
                     });
+            }
+
+            $scope.addComment = function (comment) {
+                commentsService.addCommentToIssue($routeParams.issueId, comment)
+                    .then(function success(params) {
+                        commentsService.getIssueComments($routeParams.issueId).then(
+                            function (response) {
+                                console.log(response);
+                                $scope.comments = response;
+                            });
+                    })
             }
         }]);
