@@ -1,24 +1,28 @@
-angular.module('issueTracker.users.identity', [])
-    .factory('identity', ['localStorageService',
-        function (localStorageService) {
-            var key = "user";
+(function () {
+    'use strict';
 
-            return {
-                getUserData: getUserData,
-                saveUserData: saveUserData,
-                deleteUserData: deleteUserData
-            }
+    angular.module('issueTracker.users.identity', [])
+        .factory('identity', ['localStorageService',
+            function (localStorageService) {
+                var key = "user";
 
-            function saveUserData(userToken) {
-                localStorageService.set(key, userToken);
-            }
+                return {
+                    getUserData: getUserData,
+                    saveUserData: saveUserData,
+                    deleteUserData: deleteUserData
+                }
 
-            function getUserData() {
-                return localStorageService.get(key);
+                function saveUserData(userToken) {
+                    localStorageService.set(key, userToken);
+                }
+
+                function getUserData() {
+                    return localStorageService.get(key);
+                }
+
+                function deleteUserData() {
+                    return localStorageService.remove(key);
+                }
             }
-            
-             function deleteUserData() {
-                return localStorageService.remove(key);
-            }
-        }
-    ]);
+        ]);
+} ());

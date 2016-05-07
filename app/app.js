@@ -84,6 +84,17 @@ angular.module('issueTracker', [
             resolve: routeChecks
         })
 
+        $routeProvider.when('/logout', {
+            controller: 'LogoutController',
+            templateUrl: 'users/logout.html',
+        });
+
+        $routeProvider.when('/profile/password', {
+            controller: 'ProfileController',
+            templateUrl: 'users/profile.html',
+            resolve: routeChecks.isAuthenticated
+        });
+
         $routeProvider.otherwise({ redirectTo: '/' });
     }])
     .run(['$rootScope', '$location', 'authentication', 'notifier', function ($rootScope, $location, authentication, notifier) {
