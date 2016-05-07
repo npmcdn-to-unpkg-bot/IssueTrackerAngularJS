@@ -1,17 +1,20 @@
-angular.module('issueTracker.labels', [])
-    .factory('labelsService', ['requester',
-        function name(requester) {
-            var url = 'labels/';
+(function () {
+    'use strict';
 
-            return {
-                getFilteredLabels: getFilteredLabels,
-            }
+    angular.module('issueTracker.labels', [])
+        .factory('labelsService', ['requester',
+            function labelsService(requester) {
+                var url = 'labels/';
 
-            function getFilteredLabels(name) {
-                var queryParams = {};
+                return {
+                    getFilteredLabels: getFilteredLabels,
+                }
 
-                queryParams.filter = name;
+                function getFilteredLabels(name) {
+                    var queryParams = {};
+                    queryParams.filter = name;
 
-                return requester.get(url, queryParams);
-            }
-        }]);
+                    return requester.get(url, queryParams);
+                }
+            }]);
+} ());
