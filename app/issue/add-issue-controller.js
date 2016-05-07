@@ -1,85 +1,100 @@
-angular.module('issueTracker.issues')
-    .config(['$routeProvider', function ($routeProvider) {
-        $routeProvider.when('/projects/:projectId/add-issue', {
-            templateUrl: 'issue/add-issue.html',
-            controller: 'AddIsssueController',
-        });
-    }])
-    .controller('AddIsssueController', [
-        '$scope', '$location', '$routeParams',
-        'identity', 'issueService', 'projectService',
-        'labelsService',
-        'authentication', '$sce', '$q', 'notifier',
-        function ($scope, $location,
-            $routeParams, identity, issueService,
-            projectService, labelsService, authentication,
-            $sce, $q, notifier) {
+(function () {
+    'use strict';
 
-            authentication.getAllUsers()
-                .then(function (response) {
-                    console.log(response);
-                    $scope.users = response;
-                });
+    angular.module('issueTracker.issues')
+        .controller('AddIsssueController', [
+            '$scope', '$location', '$routeParams',
+            'identity', 'issueService', 'projectService',
+            'labelsService',
+            'authentication', '$sce', '$q', 'notifier',
+            function AddIsssueController($scope, $location, $routeParams,
+                identity, issueService, projectService,
+                labelsService, authentication,
+                $sce, $q, notifier) {
 
-            projectService.getProjectById($routeParams.projectId)
-                .then(function (response) {
-                    console.log(response);
-                    $scope.project = response;
-                });
+                var currentProjectId = $routeParams.projectId;
 
-            $scope.addIssue = function addIssue(issueToAdd) {
-                console.log(issueToAdd);
-                issueToAdd.ProjectId = $routeParams.projectId;
-                issueToAdd.PriorityId = issueToAdd.Priority.Id;
-                var labelsTemp = issueToAdd.Label.split(/,\s*/);
-                issueToAdd.Labels = [];
-                labelsTemp.forEach(function name(label) {
-                    issueToAdd.Labels.push({ Name: label });
-                });
-                issueToAdd.AssigneeId = issueToAdd.Assignee.Id;
-                delete issueToAdd.Label;
-                delete issueToAdd.Assignee;
-                delete issueToAdd.Priority;
-                console.log(issueToAdd);
-                issueService.addIssue(issueToAdd);
-                notifier.success("Issue added!");
-            }
+                projectService.getProjectById(currentProjectId)
+                    .then(function success(response) {
+                        $scope.project = response;
+                        checkRights();
+                    });
 
-
-
-            $scope.openDate = function () {
-                $scope.popup.opened = true;
-            };
-
-            $scope.popup = {
-                opened: false
-            };
-
-            $scope.format = 'dd-MMMM-yyyy'
-
-            $scope.dirty = {};
-
-            var suggestLabelRemoteAndDelimited = function (term) {
-                var ix = term.lastIndexOf(','),
-                    lhs = term.substring(0, ix + 1),
-                    rhs = term.substring(ix + 1),
-                    deferred = $q.defer();
-
-                deferred.resolve(labelsService.getFilteredLabels(rhs)
+                authentication.getAllUsers()
                     .then(function (response) {
-                        var labels = response;
-                        var result = [];
-                        labels.forEach(function (l) {
-                            result.push({ label: l.Name, value: lhs + l.Name });
+                        $scope.users = response;
+                    });
+
+                $scope.addIssue = function addIssue(issueToAdd) {
+
+                    issueToAdd.ProjectId = currentProjectId;
+                    issueToAdd.PriorityId = issueToAdd.Priority.Id;
+                    issueToAdd.AssigneeId = issueToAdd.Assignee.Id;
+                    issueToAdd = formatLabels(issueToAdd);
+
+                    delete issueToAdd.Label;
+                    delete issueToAdd.Assignee;
+                    delete issueToAdd.Priority;
+
+                    issueService.addIssue(issueToAdd)
+                        .then(function success(params) {
+                            notifier.success("Issue added!");
+                            $location.path('/projects/' + currentProjectId);
                         });
+                }
 
-                        return result;
-                    }));
+                $scope.openDate = function () {
+                    $scope.popup.opened = true;
+                };
 
-                return deferred.promise;
-            };
+                $scope.popup = {
+                    opened: false
+                };
 
-            $scope.ac_option_delimited = {
-                suggest: suggestLabelRemoteAndDelimited
-            };
-        }]);
+                $scope.format = 'dd-MMMM-yyyy'
+
+                $scope.dirty = {};
+
+                var suggestLabelRemoteAndDelimited = function (term) {
+                    var ix = term.lastIndexOf(','),
+                        lhs = term.substring(0, ix + 1),
+                        rhs = term.substring(ix + 1),
+                        deferred = $q.defer();
+
+                    deferred.resolve(labelsService.getFilteredLabels(rhs)
+                        .then(function (response) {
+                            var labels = response;
+                            var result = [];
+                            labels.forEach(function (l) {
+                                result.push({ label: l.Name, value: lhs + l.Name });
+                            });
+
+                            return result;
+                        }));
+
+                    return deferred.promise;
+                };
+
+                $scope.ac_option_delimited = {
+                    suggest: suggestLabelRemoteAndDelimited
+                };
+
+                function checkRights() {
+                    if ($scope.project.Lead.Id != identity.getUserData().Id
+                        && !authentication.isAdmin()) {
+                        $location.path('/');
+                        notifier.error('Unauthorized access! Only project leaders can view this page!');
+                    }
+                }
+
+                function formatLabels(issueToAdd) {
+                    var labelsTemp = issueToAdd.Label.split(/,\s*/);
+                    issueToAdd.Labels = [];
+                    labelsTemp.forEach(function name(label) {
+                        issueToAdd.Labels.push({ Name: label });
+                    });
+
+                    return issueToAdd;
+                }
+            }]);
+} ());

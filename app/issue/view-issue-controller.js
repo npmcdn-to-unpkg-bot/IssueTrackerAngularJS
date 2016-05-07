@@ -6,8 +6,8 @@ angular.module('issueTracker.issues')
         });
     }])
     .controller('ViewIsssueController',
-    ['$scope', '$location', '$routeParams', 'identity', 'issueService', 'commentsService',
-        function ($scope, $location, $routeParams, identity, issueService, commentsService) {
+    ['$scope', '$location', '$routeParams', 'identity', 'authentication', 'issueService', 'commentsService',
+        function ($scope, $location, $routeParams, identity, authentication, issueService, commentsService) {
             issueService.getIssueById($routeParams.issueId).then(
                 function (response) {
                     console.log(response);
@@ -18,7 +18,8 @@ angular.module('issueTracker.issues')
                     }
 
                     $scope.userIsProjectLeader = function () {
-                        return $scope.issue.Author.Id == identity.getUserData().Id;
+                        return $scope.issue.Author.Id == identity.getUserData().Id
+                            || authentication.isAdmin();
                     }
                 });
 

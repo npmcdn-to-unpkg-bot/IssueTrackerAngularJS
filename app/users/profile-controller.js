@@ -14,6 +14,7 @@ angular.module('issueTracker.users.profile',
                 authentication.changePassword(data)
                     .then(function success(params) {
                         notifier.success('Successfully changed password!');
+                        $location.path('/');
                     });
 
             }

@@ -1,16 +1,21 @@
 angular.module('issueTracker.projects')
-    .config(['$routeProvider', function ($routeProvider) {
-        $routeProvider.when('/projects/:projectId/edit', {
-            templateUrl: 'project/edit-project.html',
-            controller: 'EditProjectController',
-        });
-    }])
     .controller('EditProjectController', [
         '$scope', '$location', '$routeParams',
         'identity', 'issueService', 'projectService',
         'labelsService',
-        'authentication', '$sce', '$q',
-        function ($scope, $location, $routeParams, identity, issueService, projectService, labelsService, authentication, $sce, $q) {
+        'authentication', 'notifier', '$sce', '$q',
+        function ($scope, $location, $routeParams, identity, issueService, projectService, labelsService, authentication, notifier, $sce, $q) {
+
+            projectService.getProjectById($routeParams.projectId)
+                .then(function name(response) {
+
+                    response.Priority = response.Priorities.map(x => x.Name).join(", ");
+                    response.Label = response.Labels.map(x => x.Name).join(", ");
+
+                    $scope.project = response;
+                    checkRights();
+                    $scope.isAdmin = authentication.isAdmin;
+                });
 
             authentication.getAllUsers()
                 .then(function (response) {
@@ -18,14 +23,7 @@ angular.module('issueTracker.projects')
 
                     $scope.users = response;
                 });
-            projectService.getProjectById($routeParams.projectId)
-                .then(function name(response) {
-                    response.Priority = response.Priorities.map(x => x.Name).join(", ");
-                    response.Label = response.Labels.map(x => x.Name).join(", ");
-                    $scope.project = response;
-                    
-                    $scope.isAdmin = authentication.isAdmin;
-                });
+
 
             $scope.editProject = function editProject(project) {
 
@@ -74,4 +72,12 @@ angular.module('issueTracker.projects')
             $scope.ac_option_delimited = {
                 suggest: suggestLabelRemoteAndDelimited
             };
+
+            function checkRights() {
+                if ($scope.project.Lead.Id != identity.getUserData().Id
+                    && !authentication.isAdmin()) {
+                    $location.path('/');
+                    notifier.error('Unauthorized access! Only project leaders can view this page!');
+                }
+            }
         }]);

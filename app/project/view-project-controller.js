@@ -1,14 +1,10 @@
 angular.module('issueTracker.projects', [])
 
-    .config(['$routeProvider', function ($routeProvider) {
-        $routeProvider.when('/projects/:projectId', {
-            templateUrl: 'project/view-project.html',
-            controller: 'ViewProjectController',
-        });
-    }])
-    .controller('ViewProjectController', ['$scope', '$routeParams', '$location', 'identity', 'projectService',
+
+    .controller('ViewProjectController', ['$scope',
+        '$routeParams', '$location', 'identity', 'authentication', 'projectService',
         'issueService',
-        function ($scope, $routeParams, $location, identity, projectsService, issueService) {
+        function ($scope, $routeParams, $location, identity, authentication, projectsService, issueService) {
 
             projectsService.getProjectById($routeParams.projectId).then(
                 function (response) {
@@ -17,7 +13,8 @@ angular.module('issueTracker.projects', [])
                     response.Priorities = response.Priorities.map(x => x.Name).join(" ");
                     $scope.project = response;
                     $scope.userIsProjectLeader = function () {
-                        return $scope.project.Lead.Id == identity.getUserData().Id;
+                        return $scope.project.Lead.Id == identity.getUserData().Id
+                            || authentication.isAdmin();;
                     }
                 });
 

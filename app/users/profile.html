@@ -2,7 +2,7 @@
     <div class="well bs-component">
         <form class="form-horizontal">
             <fieldset>
-                <legend>Login</legend>
+                <legend>Change password</legend>
                 <div class="form-group">
                     <label for="oldPassword">Old password</label>
                     <input id="oldPassword" required="required" ng-model="data.OldPassword" type="password" class="form-control" />
@@ -15,7 +15,7 @@
                     <label for="repeatPassword">Repeat password</label>
                     <input id="repeatPassword" required="required" ng-model="data.ConfirmPassword" type="password" class="form-control" />
                 </div>
-                <button class="btn btn-primary" ng-disabled="data.ConfirmPassword != data.NewPassword" ng-click=" changePassword(data) ">Login</button>
+                <button class="btn btn-primary" ng-disabled="data.ConfirmPassword != data.NewPassword" ng-click=" changePassword(data) ">Change password</button>
             </fieldset>
         </form>
     </div>

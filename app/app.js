@@ -39,7 +39,36 @@ angular.module('issueTracker', [
                 return $q.reject('Must be admin');
             }]
         }
-        
+
+        $routeProvider.when('/issue/:issueId/edit', {
+            templateUrl: 'issue/edit-issue.html',
+            controller: 'EditIsssueController',
+            resolve: routeChecks.authenticated
+        });
+
+        $routeProvider.when('/project/add', {
+            templateUrl: 'project/add-project.html',
+            controller: 'AddProjectController',
+            resolve: routeChecks
+        });
+
+        $routeProvider.when('/projects/:projectId', {
+            templateUrl: 'project/view-project.html',
+            controller: 'ViewProjectController',
+            resolve: routeChecks.authenticated
+        });
+
+        $routeProvider.when('/projects/:projectId/edit', {
+            templateUrl: 'project/edit-project.html',
+            controller: 'EditProjectController',
+            resolve: routeChecks.authenticated
+        });
+
+        $routeProvider.when('/projects/:projectId/add-issue', {
+            templateUrl: 'issue/add-issue.html',
+            controller: 'AddIsssueController',
+        });
+
         $routeProvider.when('/projects', {
             templateUrl: 'project/all-projects.html',
             controller: 'AllProjectsController',
@@ -48,7 +77,7 @@ angular.module('issueTracker', [
 
         $routeProvider.otherwise({ redirectTo: '/' });
     }])
-    .run(['$rootScope', '$location', 'authentication','notifier', function ($rootScope, $location, authentication, notifier) {
+    .run(['$rootScope', '$location', 'authentication', 'notifier', function ($rootScope, $location, authentication, notifier) {
         $rootScope.$on('$routeChangeError', function (ev, current, previous, rejection) {
             if (rejection == 'Unauthorized Access') {
                 notifier.error("You must be logged in to access this page.");

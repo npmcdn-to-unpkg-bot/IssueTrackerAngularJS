@@ -1,22 +1,13 @@
 angular.module('issueTracker.projects')
-    .config(['$routeProvider', function ($routeProvider) {
-        $routeProvider.when('/projects/add', {
-            templateUrl: 'project/add-project.html',
-            controller: 'AddProjectController',
-        });
-    }])
+
     .controller('AddProjectController', [
         '$scope', '$location', '$routeParams',
         'identity', 'issueService', 'projectService',
-        'labelsService',
+        'labelsService', 'notifier',
         'authentication', '$sce', '$q',
-        function ($scope, $location, $routeParams, identity, issueService, projectService, labelsService, authentication, $sce, $q) {
+        function ($scope, $location, $routeParams, identity, issueService, projectService, labelsService, notifier, authentication, $sce, $q) {
 
-            authentication.getAllUsers()
-                .then(function (response) {
-                    console.log(response);
-                    $scope.users = response;
-                });
+
 
             $scope.addProject = function addIssue(project) {
 
@@ -36,8 +27,18 @@ angular.module('issueTracker.projects')
                 delete project.Priority;
                 console.log(project);
 
-                projectService.addProject(project);
+                projectService.addProject(project)
+                    .then(function success(params) {
+                        notifier.success('Project added!');
+                        $location.path('/');
+                    });
             }
+
+            authentication.getAllUsers()
+                .then(function (response) {
+                    console.log(response);
+                    $scope.users = response;
+                });
 
             $scope.dirty = {};
 

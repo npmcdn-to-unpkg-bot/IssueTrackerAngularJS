@@ -1,91 +1,109 @@
-angular.module('issueTracker.issues')
-    .config(['$routeProvider', function ($routeProvider) {
-        $routeProvider.when('/issue/:issueId/edit', {
-            templateUrl: 'issue/edit-issue.html',
-            controller: 'EditIsssueController',
-        });
-    }])
-    .controller('EditIsssueController',
-    ['$scope', '$location', '$routeParams', 'authentication', 'identity', 'issueService', 'labelsService', 'projectService', '$sce', '$q',
-        function ($scope, $location, $routeParams, authentication, identity, issueService, labelsService, projectService, $sce, $q) {
+(function () {
+    'use strict';
 
-            authentication.getAllUsers()
-                .then(function (response) {
-                    console.log(response);
-                    $scope.users = response;
-                });
+    angular.module('issueTracker.issues')
+        .controller('EditIsssueController',
+        ['$scope', '$location', '$routeParams',
+            'authentication', 'identity', 'issueService',
+            'labelsService', 'projectService', 'notifier',
+            '$sce', '$q',
+            function EditIsssueController(
+                $scope, $location, $routeParams,
+                authentication, identity, issueService,
+                labelsService, projectService, notifier,
+                $sce, $q) {
 
+                var currentIssueId = $routeParams.issueId;
 
-            issueService.getIssueById($routeParams.issueId).then(
-                function (response) {
-                    console.log(response);
-                    response.DueDate = new Date(response.DueDate);
-                    response.Label = response.Labels.map(x => x.Name).join(", ");
-                    $scope.issue = response;
-
-                    projectService.getProjectById(response.Project.Id)
-                        .then(function (response) {
-                            console.log(response);
-                            $scope.project = response;
-                        });
-                });
-
-
-
-            $scope.openDate = function () {
-                $scope.popup.opened = true;
-            };
-
-            $scope.popup = {
-                opened: false
-            };
-
-            $scope.format = 'dd-MMMM-yyyy'
-
-            $scope.editIssue = function (issueToAdd) {
-                console.log(issueToAdd);
-                issueToAdd.PriorityId = issueToAdd.Priority.Id;
-                var labelsTemp = issueToAdd.Label.split(/,\s*/);
-                issueToAdd.Labels = [];
-                labelsTemp.forEach(function name(label) {
-                    issueToAdd.Labels.push({ Name: label });
-                });
-                issueToAdd.AssigneeId = issueToAdd.Assignee.Id;
-                delete issueToAdd.Label;
-                delete issueToAdd.Assignee;
-                delete issueToAdd.Priority;
-                console.log(issueToAdd);
-                issueService.editIssue(issueToAdd)
+                issueService.getIssueById(currentIssueId)
                     .then(function success(response) {
                         response.DueDate = new Date(response.DueDate);
                         response.Label = response.Labels.map(x => x.Name).join(", ");
                         $scope.issue = response;
+
+                        projectService.getProjectById(response.Project.Id)
+                            .then(function success(response) {
+                                $scope.project = response;
+                                checkRights();
+                            });
                     });
-            }
 
-            $scope.dirty = {};
+                authentication.getAllUsers()
+                    .then(function success(response) {
+                        $scope.users = response;
+                    });
 
-            var suggestLabelRemoteAndDelimited = function (term) {
-                var ix = term.lastIndexOf(','),
-                    lhs = term.substring(0, ix + 1),
-                    rhs = term.substring(ix + 1),
-                    deferred = $q.defer();
+                $scope.openDate = function () {
+                    $scope.popup.opened = true;
+                };
 
-                deferred.resolve(labelsService.getFilteredLabels(rhs)
-                    .then(function (response) {
-                        var labels = response;
-                        var result = [];
-                        labels.forEach(function (l) {
-                            result.push({ label: l.Name, value: lhs + l.Name });
+                $scope.popup = {
+                    opened: false
+                };
+
+                $scope.format = 'dd-MMMM-yyyy'
+
+                $scope.editIssue = function (issueToEdit) {
+
+                    issueToEdit.PriorityId = issueToEdit.Priority.Id;
+                    issueToEdit.AssigneeId = issueToEdit.Assignee.Id;
+                    issueToEdit = formatLabels(issueToEdit);
+
+                    delete issueToEdit.Label;
+                    delete issueToEdit.Assignee;
+                    delete issueToEdit.Priority;
+
+                    issueService.editIssue(issueToEdit)
+                        .then(function success(response) {
+                            response.DueDate = new Date(response.DueDate);
+                            response.Label = response.Labels.map(x => x.Name).join(", ");
+                            $scope.issue = response;
+                            notifier.success('Issue successfully edited!');
                         });
+                }
 
-                        return result;
-                    }));
+                $scope.dirty = {};
 
-                return deferred.promise;
-            };
+                var suggestLabelRemoteAndDelimited = function (term) {
+                    var ix = term.lastIndexOf(','),
+                        lhs = term.substring(0, ix + 1),
+                        rhs = term.substring(ix + 1),
+                        deferred = $q.defer();
 
-            $scope.ac_option_delimited = {
-                suggest: suggestLabelRemoteAndDelimited
-            };
-        }]);
+                    deferred.resolve(labelsService.getFilteredLabels(rhs)
+                        .then(function (response) {
+                            var labels = response;
+                            var result = [];
+                            labels.forEach(function (l) {
+                                result.push({ label: l.Name, value: lhs + l.Name });
+                            });
+
+                            return result;
+                        }));
+
+                    return deferred.promise;
+                };
+
+                $scope.ac_option_delimited = {
+                    suggest: suggestLabelRemoteAndDelimited
+                };
+
+                function checkRights() {
+                    if ($scope.project.Lead.Id != identity.getUserData().Id
+                        && !authentication.isAdmin()) {
+                        $location.path('/');
+                        notifier.error('Unauthorized access! Only project leaders can view this page!');
+                    }
+                }
+
+                function formatLabels(issueToEdit) {
+                    var labelsTemp = issueToEdit.Label.split(/,\s*/);
+                    issueToEdit.Labels = [];
+                    labelsTemp.forEach(function name(label) {
+                        issueToEdit.Labels.push({ Name: label });
+                    });
+
+                    return issueToEdit;
+                }
+            }]);
+} ());

@@ -34,7 +34,7 @@ angular.module('issueTracker.users.authentication', [])
             }
 
             function registerUser(user) {
-               return requester.post('api/Account/Register', user)
+                return requester.post('api/Account/Register', user)
             }
 
             function isAuthenticated() {
