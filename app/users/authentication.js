@@ -14,10 +14,8 @@ angular.module('issueTracker.users.authentication', [])
             }
 
             function loginUser(user) {
-                console.log(user);
                 var loginUserData = "grant_type=password&username="
                     + user.email + "&password=" + user.password;
-                console.log(loginUserData);
 
                 return requester.post('api/Token', loginUserData)
                     .then(function (response) {

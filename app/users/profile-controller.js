@@ -5,10 +5,7 @@
         ['issueTracker.users.authentication'])
 
         .config(['$routeProvider', function ($routeProvider) {
-            $routeProvider.when('/profile/password', {
-                controller: 'ProfileController',
-                templateUrl: 'users/profile.html',
-            });
+            
         }])
         .controller('ProfileController', ['$scope', '$location', 'authentication', 'notifier',
             function ($scope, $location, authentication, notifier) {

@@ -42,6 +42,10 @@ angular.module('issueTracker', [
             }]
         }
 
+        $routeProvider.when('/', {
+            templateUrl: 'home/home.html',
+            controller: 'HomeController',
+        })
 
         $routeProvider.when('/issue/:issueId', {
             templateUrl: 'issue/view-issue.html',

@@ -1,29 +1,17 @@
-angular.module('issueTracker.home', [
-    'issueTracker.users.authentication'])
-
-    .config(['$routeProvider', function ($routeProvider) {
-        $routeProvider.when('/', {
-            templateUrl: 'home/login.html',
-            controller: 'HomeController',
-        })
-    }])
-
+angular.module('issueTracker.home', [])
     .controller('HomeController', [
         '$scope', '$location', 'notifier', 'identity', 'authentication', 'issueService', 'projectService',
         function HomeController($scope, $location, notifier, identity, authentication, issueService, projectService) {
+
             $scope.isAuthenticated = authentication.isAuthenticated();
             $scope.loginMode = true;
             $scope.toggleLogin = toggleLogin;
+
             $scope.login = function (user) {
-
-                console.log(user);
-
                 authentication.loginUser(user)
                     .then(function (params) {
-                        console.log(user);
                         notifier.success('Successfully logged in!');
                         $location.path("/");
-
                     }, function error() {
                         notifier.error('Invalid login details!');
                     });
@@ -54,7 +42,6 @@ angular.module('issueTracker.home', [
                 var projectsWithIssues = [];
 
                 issueService.getIssuesByUser().then(function (response) {
-                    console.log(response.Issues);
                     $scope.issues = response.Issues;
 
                     response.Issues.forEach(function (issue) {
@@ -67,21 +54,17 @@ angular.module('issueTracker.home', [
                         projectService.getProjectById(projectId).then(
                             function (response) {
                                 projectsWithIssues.push(response);
-                                console.log(response);
                             });
                     });
 
                     $scope.projectsByIssue = projectsWithIssues;
-
-                    console.log(projectIds);
                 });
 
                 filters = [];
                 var username = identity.getUserData().Username;
                 filters.push('Lead.Username == ' + '"' + username + '"')
 
-                projectService.getFilteredProjects(10, 1, filters).then(function (response) {
-                    console.log(response.Projects);
+                projectService.getFilteredProjects(20, 1, filters).then(function (response) {
                     $scope.projects = response.Projects;
                 });
             }

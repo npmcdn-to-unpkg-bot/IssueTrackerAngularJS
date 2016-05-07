@@ -19,7 +19,6 @@
                 .then(function (response) {
                     defered.resolve(response.data);
                 }, function (error) {
-                    console.log(error);
                     defered.reject(error);
                 });
 
@@ -33,7 +32,6 @@
                 .then(function (response) {
                     defered.resolve(response.data);
                 }, function (error) {
-                    console.log(error);
                     defered.reject(error);
                 });
 
@@ -47,7 +45,6 @@
                 .then(function (response) {
                     defered.resolve(response.data);
                 }, function (error) {
-                    console.log(error);
                     defered.reject(error);
                 });
 

@@ -1,34 +1,38 @@
-angular.module('issueTracker.projects')
-    .factory('projectService', ['requester', 'identity',
-        function name(requester, identity) {
-            var url = 'projects/';
+(function () {
+    'use strict';
 
-            return {
-                getFilteredProjects: getFilteredProjects,
-                getProjectById: getProjectById,
-                addProject: addProject,
-                editProject: editProject,
-            }
+    angular.module('issueTracker.projects')
+        .factory('projectService', ['requester', 'identity',
+            function name(requester, identity) {
+                var url = 'projects/';
 
-            function getFilteredProjects(pageSize, pageNumber, filters) {
-                var queryParams = {};
+                return {
+                    getFilteredProjects: getFilteredProjects,
+                    getProjectById: getProjectById,
+                    addProject: addProject,
+                    editProject: editProject,
+                }
 
-                queryParams.pageNumber = pageNumber;
-                queryParams.pageSize = pageSize;
-                queryParams.filter = filters || 'Name.length > 0';
+                function getFilteredProjects(pageSize, pageNumber, filters) {
+                    var queryParams = {};
 
-                return requester.get(url, queryParams);
-            }
+                    queryParams.pageNumber = pageNumber;
+                    queryParams.pageSize = pageSize;
+                    queryParams.filter = filters || 'Name.length > 0';
 
-            function getProjectById(projectId) {
-                return requester.get(url + projectId);
-            }
+                    return requester.get(url, queryParams);
+                }
 
-            function addProject(project) {
-                return requester.post(url, project);
-            }
+                function getProjectById(projectId) {
+                    return requester.get(url + projectId);
+                }
 
-            function editProject(project) {
-                return requester.put(url + project.Id, project);
-            }
-        }])
+                function addProject(project) {
+                    return requester.post(url, project);
+                }
+
+                function editProject(project) {
+                    return requester.put(url + project.Id, project);
+                }
+            }])
+} ());
