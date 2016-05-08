@@ -11,6 +11,10 @@
   content: "[";
 }
 
+th {
+  text-align: center;
+}
+
 .menu:after {
   content: "]";
 }

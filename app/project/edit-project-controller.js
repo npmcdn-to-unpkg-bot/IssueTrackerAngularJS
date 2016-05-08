@@ -38,7 +38,11 @@
                     delete project.Priority;
                     delete project.ProjectKey;
 
-                    projectService.editProject(project);
+                    projectService.editProject(project)
+                        .then(function success(response) {
+                            notifier.success('Project edited');
+                            $location.path('projects/' + $routeParams.projectId);
+                        });
                 }
 
                 $scope.dirty = {};
